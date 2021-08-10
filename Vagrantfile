@@ -50,6 +50,7 @@ Vagrant.configure("2") do |config|
                 #v.customize ["modifyvm", :id, "--cpuexecutioncap", "20"]
             end             
             node.vm.provision "ansible" do |ansible|
+                ansible.verbose = "v"
                 ansible.playbook = "roles/k8s.yml"                   
                 #Redefine defaults
                 ansible.extra_vars = {

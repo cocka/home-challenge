@@ -15,7 +15,12 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart docker
+  notify:
+    - reload systemd
+    - restart docker
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
 
 - name: Configure kubectl
   command: kubeadm init --apiserver-advertise-address="{{ k8s_master_apiserver_advertise_address }}" --apiserver-cert-extra-sans="{{ k8s_master_apiserver_advertise_address }}" --node-name="{{ k8s_master_node_name }}" --pod-network-cidr="{{ k8s_master_pod_network_cidr }}"

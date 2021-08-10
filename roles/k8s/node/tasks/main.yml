@@ -13,9 +13,12 @@
     owner: root
     group: root
     mode: 0644
-  notify: 
+  notify:
     - reload systemd
     - restart docker
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
 
 - name: Copy the join command to {{ k8s_cluster_name }} cluster
   copy: 
